@@ -33,19 +33,20 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend amandine-frontend
+frontend amandine-tech-frontend
         bind *:80
         mode http
         http-request redirect scheme https code 301 unless { ssl_fc }
         http-request set-header X_Forwarded-Proto http
-        default_backend amandine-backend
+        default_backend amandine-tech-backend
 
-frontend amandine-frontend-https
+frontend amandine-tech-frontend-https
         bind *:443 ssl crt /etc/haproxy/certs/www.amandine.tech.pem
         http-request set-header X-Forwarded-Proto https
-        default_backend amandine-backend
+        default_backend amandine-tech-backend
 
-backend amandine-backend
+backend amandine-tech-backend
         balance roundrobin
-        server 6028-web-01 3.88.228.216:80 check
-        server 6028-web-02 3.84.227.243:80 check
+        Server 6028-web-01 3.88.228.216:80 check
+        Server 6028-web-02 3.84.227.243:80 check
+
